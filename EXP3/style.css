@@ -1,0 +1,230 @@
+body {
+    margin: 0;
+    background-color: #fff5f7;
+    font-family: Arial, sans-serif;
+    color: #4a3035;
+}
+
+header {
+    background-color: #ffb6c1;
+    padding: 35px;
+    text-align: center;
+}
+
+header h1 {
+    color: #8b0000;
+    font-size: 38px;
+    margin: 10px;
+    text-shadow: 2px 2px 4px white;
+}
+
+header p {
+    color: #6b3038;
+    font-size: 17px;
+    letter-spacing: 2px;
+}
+
+nav {
+    background-color: #d63384;
+    padding: 12px;
+    text-align: center;
+}
+
+nav a {
+    color: white;
+    text-decoration: none;
+    padding: 12px 20px;
+    margin: 5px;
+    display: inline-block;
+    font-weight: bold;
+}
+
+nav a:hover {
+    background-color: #ff85a2;
+}
+
+.welcome {
+    width: 85%;
+    margin: 25px auto;
+    padding: 30px;
+    background-color: white;
+    text-align: center;
+}
+
+.welcome-text h2 {
+    color: #d63384;
+    font-size: 30px;
+    margin-bottom: 15px;
+}
+
+.welcome-text p {
+    font-size: 17px;
+}
+
+.welcome img {
+    width: 280px;
+    height: 190px;
+    margin-top: 15px;
+}
+
+.cakes {
+    width: 88%;
+    margin: 25px auto;
+    padding: 30px;
+    background-color: #ffe4e1;
+}
+
+.cakes h2 {
+    color: #8b0000;
+    text-align: center;
+    font-size: 30px;
+    margin-bottom: 10px;
+}
+
+.section-text {
+    text-align: center;
+    font-size: 16px;
+}
+
+.cake-container {
+    column-count: 3;
+    column-gap: 20px;
+    margin-top: 25px;
+}
+
+.cake {
+    background-color: white;
+    padding: 20px;
+    margin-bottom: 20px;
+    height: 150px;
+    text-align: center;
+}
+
+.cake h3 {
+    color: #d63384;
+    font-size: 20px;
+}
+
+.cake p {
+    font-size: 15px;
+}
+
+.price {
+    color: #8b0000;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.offers {
+    width: 80%;
+    margin: 25px auto;
+    padding: 25px;
+    background-color: #fff0f5;
+}
+
+.offers h2 {
+    color: #d63384;
+    text-align: center;
+    font-size: 28px;
+}
+
+.offers ul {
+    list-style-type: circle;
+    font-size: 17px;
+    line-height: 1.8;
+    width: 70%;
+    margin: auto;
+}
+
+.order {
+    width: 80%;
+    margin: 25px auto;
+    padding: 30px;
+    background-color: white;
+}
+
+.order h2 {
+    color: #d63384;
+    text-align: center;
+    font-size: 28px;
+}
+
+.order form {
+    margin-top: 20px;
+}
+
+.order label {
+    display: block;
+    margin-top: 15px;
+    font-weight: bold;
+}
+
+.order input,
+.order select {
+    width: 95%;
+    padding: 12px;
+    margin-top: 5px;
+    font-family: Arial, sans-serif;
+}
+
+.order input[type="submit"] {
+    width: 150px;
+    background-color: #d63384;
+    color: white;
+    border: none;
+    font-weight: bold;
+}
+
+.order input[type="reset"] {
+    width: 100px;
+    background-color: #888888;
+    color: white;
+    border: none;
+    font-weight: bold;
+}
+
+footer {
+    background-color: #d63384;
+    color: white;
+    text-align: center;
+    padding: 25px;
+    margin-top: 30px;
+}
+
+footer h3 {
+    font-size: 20px;
+}
+
+@media screen and (max-width: 700px) {
+
+    .cake-container {
+        column-count: 1;
+    }
+
+    .welcome,
+    .offers,
+    .order {
+        width: 85%;
+    }
+
+    .cakes {
+        width: 82%;
+    }
+
+    header h1 {
+        font-size: 28px;
+    }
+
+    nav a {
+        display: block;
+    }
+
+    .welcome img {
+        width: 220px;
+        height: 150px;
+    }
+
+    .offers ul {
+        width: 90%;
+    }
+}
