@@ -1,0 +1,942 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Sweet Cravings | Cake Order</title>
+
+    <!-- jQuery Library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            background: #fff8f5;
+            color: #51333d;
+        }
+
+        /* HEADER */
+
+        header {
+            background: #713d50;
+            color: white;
+            padding: 22px 7%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        header h1 {
+            font-family: Georgia, serif;
+            font-size: 30px;
+        }
+
+        header span {
+            color: #ffd8bd;
+        }
+
+        /* HERO */
+
+        .hero {
+            text-align: center;
+            padding: 55px 20px;
+            background: linear-gradient(120deg, #f8dce0, #fff0df);
+        }
+
+        .hero h2 {
+            font-family: Georgia, serif;
+            font-size: 38px;
+            color: #713d50;
+            margin-bottom: 15px;
+        }
+
+        .hero p {
+            font-size: 17px;
+        }
+
+        /* COMMON SECTION */
+
+        .section {
+            padding: 45px 7%;
+        }
+
+        .section-title {
+            text-align: center;
+            color: #713d50;
+            font-family: Georgia, serif;
+            font-size: 30px;
+            margin-bottom: 30px;
+        }
+
+        /* CAKE GRID */
+
+        .cake-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+            gap: 25px;
+        }
+
+        /* CAKE CARD */
+
+        .cake-card {
+            background: white;
+            padding: 18px;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 4px 15px #00000012;
+            transition: 0.3s;
+        }
+
+        .cake-card:hover {
+            transform: translateY(-7px);
+            box-shadow: 0 8px 20px #a34f6830;
+        }
+
+        .cake-image {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+            border-radius: 12px;
+            margin-bottom: 15px;
+        }
+
+        .cake-card h3 {
+            font-size: 18px;
+            margin-bottom: 10px;
+        }
+
+        .cake-card p {
+            font-size: 14px;
+            margin-bottom: 10px;
+        }
+
+        .price {
+            color: #a34f68;
+            font-size: 21px !important;
+            font-weight: bold;
+        }
+
+        /* QUANTITY INPUT */
+
+        .quantity-label {
+            display: block;
+            margin: 12px 0 6px;
+            font-weight: bold;
+        }
+
+        .quantity {
+            width: 85px;
+            padding: 10px;
+            border: 1px solid #d9a5b3;
+            border-radius: 8px;
+            text-align: center;
+            font-size: 16px;
+        }
+
+        /* BUTTONS */
+
+        button {
+            background: #a34f68;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 14px;
+            margin: 6px;
+            transition: 0.3s;
+        }
+
+        button:hover {
+            background: #713d50;
+            transform: scale(1.04);
+        }
+
+        .calculate-btn {
+            background: #713d50;
+            padding: 14px 35px;
+            font-size: 16px;
+            font-weight: bold;
+        }
+
+        .reset-btn {
+            background: #777;
+        }
+
+        /* ORDER AREA */
+
+        .order-area {
+            text-align: center;
+            margin-top: 35px;
+        }
+
+        /* BILL */
+
+        #billSection {
+            display: none;
+            max-width: 750px;
+            margin: 35px auto;
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 5px 20px #00000012;
+        }
+
+        #billSection h2 {
+            text-align: center;
+            color: #713d50;
+            margin-bottom: 20px;
+        }
+
+        .bill-header {
+            background: #713d50;
+            color: white;
+            padding: 15px;
+            text-align: center;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+
+        #billTable {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+
+        #billTable th,
+        #billTable td {
+            border: 1px solid #e8cbd2;
+            padding: 12px;
+            text-align: center;
+        }
+
+        #billTable th {
+            background: #f5dfe4;
+            color: #713d50;
+        }
+
+        .total-box {
+            background: #279b62;
+            color: white;
+            padding: 18px;
+            text-align: center;
+            font-size: 23px;
+            font-weight: bold;
+            border-radius: 8px;
+        }
+
+        #message {
+            text-align: center;
+            margin: 15px;
+            font-weight: bold;
+            color: #713d50;
+        }
+
+        .offer {
+            background: #f8e7e4;
+            text-align: center;
+            padding: 25px;
+            border-radius: 12px;
+            margin-top: 25px;
+        }
+
+        /* FOOTER */
+
+        footer {
+            background: #713d50;
+            color: white;
+            padding: 25px;
+            text-align: center;
+            line-height: 2;
+            margin-top: 30px;
+        }
+
+        @media(max-width: 600px) {
+
+            header {
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            .hero h2 {
+                font-size: 29px;
+            }
+
+            #billSection {
+                padding: 15px;
+                overflow-x: auto;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+    <!-- HEADER -->
+
+    <header>
+
+        <h1>🍰 Sweet <span>Cravings</span></h1>
+
+        <p>Online Cake Shop</p>
+
+    </header>
+
+
+    <!-- HOME SECTION -->
+
+    <section class="hero">
+
+        <h2>Make Every Celebration Sweeter!</h2>
+
+        <p>
+            Freshly baked cakes for every special occasion.
+        </p>
+
+        <p style="margin-top:12px">
+            Choose your favourite cakes and calculate your order!
+        </p>
+
+    </section>
+
+
+    <!-- CAKE MENU -->
+
+    <section class="section">
+
+        <h2 class="section-title">
+            Our Delicious Cakes 🎂
+        </h2>
+
+        <div class="cake-container">
+
+            <!-- CAKE 1 -->
+
+            <div class="cake-card">
+
+                <img
+                    src="Black Forest Cake.jpg"
+                    class="cake-image"
+                    alt="Black Forest Cake"
+                >
+
+                <h3>Black Forest Cake</h3>
+
+                <p>Chocolate layers with fresh cream.</p>
+
+                <p class="price">₹750</p>
+
+                <label class="quantity-label">
+                    Enter Quantity:
+                </label>
+
+                <input
+                    type="number"
+                    class="quantity"
+                    id="q1"
+                    min="0"
+                    max="99"
+                    value="0"
+                >
+
+            </div>
+
+
+            <!-- CAKE 2 -->
+
+            <div class="cake-card">
+
+                <img
+                    src="chocolate cake.jpg"
+                    class="cake-image"
+                    alt="Chocolate Cake"
+                >
+
+                <h3>Chocolate Cake</h3>
+
+                <p>Rich and creamy chocolate delight.</p>
+
+                <p class="price">₹650</p>
+
+                <label class="quantity-label">
+                    Enter Quantity:
+                </label>
+
+                <input
+                    type="number"
+                    class="quantity"
+                    id="q2"
+                    min="0"
+                    max="99"
+                    value="0"
+                >
+
+            </div>
+
+
+            <!-- CAKE 3 -->
+
+            <div class="cake-card">
+
+                <img
+                    src="cake.jpg"
+                    class="cake-image"
+                    alt="Classic Cake"
+                >
+
+                <h3>Classic Cake</h3>
+
+                <p>A delicious classic chocolate cake.</p>
+
+                <p class="price">₹500</p>
+
+                <label class="quantity-label">
+                    Enter Quantity:
+                </label>
+
+                <input
+                    type="number"
+                    class="quantity"
+                    id="q3"
+                    min="0"
+                    max="99"
+                    value="0"
+                >
+
+            </div>
+
+
+            <!-- CAKE 4 -->
+
+            <div class="cake-card">
+
+                <img
+                    src="Pineapple Cake.jpg"
+                    class="cake-image"
+                    alt="Pineapple Cake"
+                >
+
+                <h3>Pineapple Cake</h3>
+
+                <p>Fresh pineapple with soft cream.</p>
+
+                <p class="price">₹550</p>
+
+                <label class="quantity-label">
+                    Enter Quantity:
+                </label>
+
+                <input
+                    type="number"
+                    class="quantity"
+                    id="q4"
+                    min="0"
+                    max="99"
+                    value="0"
+                >
+
+            </div>
+
+
+            <!-- CAKE 5 -->
+
+            <div class="cake-card">
+
+                <img
+                    src="Red Velvet Cake.jpg"
+                    class="cake-image"
+                    alt="Red Velvet Cake"
+                >
+
+                <h3>Red Velvet Cake</h3>
+
+                <p>Soft red velvet with cream cheese.</p>
+
+                <p class="price">₹850</p>
+
+                <label class="quantity-label">
+                    Enter Quantity:
+                </label>
+
+                <input
+                    type="number"
+                    class="quantity"
+                    id="q5"
+                    min="0"
+                    max="99"
+                    value="0"
+                >
+
+            </div>
+
+
+            <!-- CAKE 6 -->
+
+            <div class="cake-card">
+
+                <img
+                    src="strawberry cake.jpg"
+                    class="cake-image"
+                    alt="Strawberry Cake"
+                >
+
+                <h3>Strawberry Cake</h3>
+
+                <p>Sweet strawberry cream cake.</p>
+
+                <p class="price">₹600</p>
+
+                <label class="quantity-label">
+                    Enter Quantity:
+                </label>
+
+                <input
+                    type="number"
+                    class="quantity"
+                    id="q6"
+                    min="0"
+                    max="99"
+                    value="0"
+                >
+
+            </div>
+
+
+            <!-- CAKE 7 -->
+
+            <div class="cake-card">
+
+                <img
+                    src="Vanilla Cake.jpg"
+                    class="cake-image"
+                    alt="Vanilla Cake"
+                >
+
+                <h3>Vanilla Cake</h3>
+
+                <p>Classic vanilla flavoured cake.</p>
+
+                <p class="price">₹450</p>
+
+                <label class="quantity-label">
+                    Enter Quantity:
+                </label>
+
+                <input
+                    type="number"
+                    class="quantity"
+                    id="q7"
+                    min="0"
+                    max="99"
+                    value="0"
+                >
+
+            </div>
+
+        </div>
+
+
+        <!-- ORDER BUTTONS -->
+
+        <div class="order-area">
+
+            <button
+                class="calculate-btn"
+                id="calculateBtn"
+            >
+                Calculate My Order
+            </button>
+
+            <button
+                class="reset-btn"
+                id="resetBtn"
+            >
+                Reset Quantities
+            </button>
+
+        </div>
+
+
+        <p id="message"></p>
+
+
+        <!-- PURCHASE BILL -->
+
+        <div id="billSection">
+
+            <div class="bill-header">
+
+                <h2 style="color:white;margin:0">
+                    Sweet Cravings
+                </h2>
+
+                <p>Purchase Order Bill</p>
+
+            </div>
+
+            <h2>Order Summary</h2>
+
+            <table id="billTable">
+
+                <thead>
+
+                    <tr>
+                        <th>Cake Name</th>
+                        <th>Quantity</th>
+                        <th>Price</th>
+                        <th>Amount</th>
+                    </tr>
+
+                </thead>
+
+                <tbody id="billDetails">
+
+                </tbody>
+
+            </table>
+
+            <div class="total-box">
+
+                Total Price: ₹<span id="grandTotal">0</span>
+
+            </div>
+
+            <div class="offer">
+
+                <h3>🎉 Thank You for Ordering!</h3>
+
+                <p>
+                    Freshly baked happiness is on its way!
+                </p>
+
+            </div>
+
+            <div style="text-align:center;margin-top:20px">
+
+                <button id="printBtn">
+                    Print Bill
+                </button>
+
+                <button id="closeBill">
+                    Close Bill
+                </button>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- FOOTER -->
+
+    <footer>
+
+        <p>
+            © 2026 Sweet Cravings | Online Cake Shop
+        </p>
+
+        <p>
+            Baked Fresh. Delivered with Love ❤️
+        </p>
+
+    </footer>
+
+
+
+    <!-- JQUERY PROGRAM -->
+
+    <script>
+
+        // Execute after the HTML document is ready
+
+        $(document).ready(function() {
+
+
+            // Cake prices
+
+            let prices = [
+                750,
+                650,
+                500,
+                550,
+                850,
+                600,
+                450
+            ];
+
+
+            // Cake names
+
+            let cakeNames = [
+
+                "Black Forest Cake",
+                "Chocolate Cake",
+                "Classic Cake",
+                "Pineapple Cake",
+                "Red Velvet Cake",
+                "Strawberry Cake",
+                "Vanilla Cake"
+
+            ];
+
+
+            // ==================================
+            // 1. JQUERY CLICK EVENT
+            // ==================================
+
+            $("#calculateBtn").click(function() {
+
+
+                let grandTotal = 0;
+
+                let billHTML = "";
+
+                let totalItems = 0;
+
+                let invalid = false;
+
+
+                // ==================================
+                // 2. JQUERY EACH FUNCTION
+                // ==================================
+
+                $(".quantity").each(function(index) {
+
+
+                    // Get quantity using val()
+
+                    let quantity = $(this).val();
+
+
+                    // Check for invalid quantity
+
+                    if (
+                        quantity === "" ||
+                        !Number.isInteger(Number(quantity)) ||
+                        Number(quantity) < 0 ||
+                        Number(quantity) > 99
+                    ) {
+
+                        invalid = true;
+
+                        return false;
+
+                    }
+
+
+                    quantity = Number(quantity);
+
+
+                    // Calculate individual amount
+
+                    let amount = quantity * prices[index];
+
+
+                    // Add to grand total
+
+                    grandTotal += amount;
+
+
+                    totalItems += quantity;
+
+
+                    // Display selected cakes in bill
+
+                    if (quantity > 0) {
+
+                        billHTML += `
+
+                            <tr>
+
+                                <td>${cakeNames[index]}</td>
+
+                                <td>${quantity}</td>
+
+                                <td>₹${prices[index]}</td>
+
+                                <td>₹${amount}</td>
+
+                            </tr>
+
+                        `;
+
+                    }
+
+                });
+
+
+                // ==================================
+                // 3. VALIDATION
+                // ==================================
+
+                if (invalid) {
+
+                    alert(
+                        "Please enter a valid quantity between 0 and 99."
+                    );
+
+                    $("#billSection").hide();
+
+                    $("#message").html(
+                        "Please correct the quantity values."
+                    );
+
+                    return;
+
+                }
+
+
+                if (totalItems === 0) {
+
+                    alert(
+                        "Please select at least one cake!"
+                    );
+
+                    $("#billSection").hide();
+
+                    $("#message").html(
+                        "No cakes selected."
+                    );
+
+                    return;
+
+                }
+
+
+                // ==================================
+                // 4. DISPLAY BILL USING html()
+                // ==================================
+
+                $("#billDetails").html(billHTML);
+
+
+                // Display grand total using html()
+
+                $("#grandTotal").html(grandTotal);
+
+
+                // Display success message
+
+                $("#message").html(
+                    "Your order has been calculated successfully! 🎉"
+                );
+
+
+                // ==================================
+                // 5. JQUERY FADE EFFECT
+                // ==================================
+
+                $("#billSection").fadeIn(1000);
+
+
+                // Scroll to bill
+
+                $("html, body").animate({
+
+                    scrollTop: $("#billSection").offset().top
+
+                }, 700);
+
+
+            });
+
+
+
+            // ==================================
+            // 6. RESET BUTTON
+            // ==================================
+
+            $("#resetBtn").click(function() {
+
+
+                // Reset all quantity values
+
+                $(".quantity").val(0);
+
+
+                // Hide purchase bill
+
+                $("#billSection").fadeOut(500);
+
+
+                // Clear messages
+
+                $("#message").html(
+                    "All quantities have been reset."
+                );
+
+
+            });
+
+
+
+            // ==================================
+            // 7. CLOSE BILL
+            // ==================================
+
+            $("#closeBill").click(function() {
+
+                $("#billSection").slideUp(500);
+
+            });
+
+
+
+            // ==================================
+            // 8. PRINT BILL
+            // ==================================
+
+            $("#printBtn").click(function() {
+
+                window.print();
+
+            });
+
+
+
+            // ==================================
+            // 9. MOUSE EVENTS
+            // ==================================
+
+            $(".cake-card").mouseenter(function() {
+
+                $(this).css(
+                    "border",
+                    "2px solid #e8a5b5"
+                );
+
+            });
+
+
+            $(".cake-card").mouseleave(function() {
+
+                $(this).css(
+                    "border",
+                    "2px solid transparent"
+                );
+
+            });
+
+
+        });
+
+    </script>
+
+
+</body>
+
+</html>
